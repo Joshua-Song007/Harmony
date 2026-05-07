@@ -58,10 +58,10 @@
 ## Phase 4 — Playback Engine
 
 ### Frontend: Playback (`src/playback/`)
-- [ ] `ShakaPlayer.tsx` — Solid.js component; wraps Shaka Player instance
-- [ ] `useShakaPlayer.ts` — composable; manages Shaka lifecycle, `load()`, `destroy()`, error handling
-- [ ] `DrmConfig.ts` — Shaka DRM configuration; license server URLs; direct (non-proxied) request routing
-- [ ] `ManifestLoader.ts` — fetches `.mpd` from Rust proxy endpoint; passes to Shaka
+- [x] `ShakaPlayer.tsx` — Solid.js component; wraps Shaka Player instance
+- [x] `useShakaPlayer.ts` — composable; manages Shaka lifecycle, `load()`, `destroy()`, error handling
+- [x] `DrmConfig.ts` — Shaka DRM configuration; license server URLs; direct (non-proxied) request routing
+- [x] `ManifestLoader.ts` — fetches `.mpd` from Rust proxy endpoint; passes to Shaka
 
 ---
 
