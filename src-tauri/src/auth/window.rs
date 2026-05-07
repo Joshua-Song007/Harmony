@@ -11,7 +11,7 @@ pub fn create_auth_window(app: &AppHandle) -> tauri::Result<()> {
         tauri::WebviewUrl::External(AUTH_URL.parse().unwrap()),
     )
     .title("Harmony — Sign In")
-    .visible(false)
+    .visible(true)
     .user_agent(SAFARI_UA)
     .build()?;
 
