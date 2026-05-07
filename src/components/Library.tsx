@@ -1,4 +1,4 @@
-import { For, onMount } from 'solid-js';
+import { For, Show, onMount } from 'solid-js';
 import { type LibraryItem, useAmazon } from '../providers/useAmazon';
 
 function artistName(item: LibraryItem): string {
@@ -6,7 +6,7 @@ function artistName(item: LibraryItem): string {
 }
 
 export default function Library() {
-  const { library, fetchLibrary, setNowPlaying, setQueue } = useAmazon();
+  const { library, libraryError, fetchLibrary, setNowPlaying, setQueue } = useAmazon();
 
   onMount(() => {
     fetchLibrary();
@@ -19,6 +19,10 @@ export default function Library() {
   }
 
   return (
+    <div style={{ display: 'flex', 'flex-direction': 'column', height: '100%' }}>
+      <Show when={libraryError()}>
+        <div style={{ padding: '16px', color: '#ff6b6b', 'font-size': '13px' }}>{libraryError()}</div>
+      </Show>
     <div style={{ display: 'grid', 'grid-template-columns': 'repeat(auto-fill, minmax(160px, 1fr))', gap: '16px', padding: '16px' }}>
       <For each={library()}>
         {(item) => (
@@ -32,6 +36,7 @@ export default function Library() {
           </div>
         )}
       </For>
+    </div>
     </div>
   );
 }

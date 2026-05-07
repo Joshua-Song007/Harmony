@@ -1,4 +1,4 @@
-import { For, createSignal } from 'solid-js';
+import { For, Show, createSignal } from 'solid-js';
 import { type Track, useAmazon } from '../providers/useAmazon';
 
 function duration(ms: number): string {
@@ -9,7 +9,7 @@ function duration(ms: number): string {
 }
 
 export default function Search() {
-  const { search, searchResults, setNowPlaying, setQueue } = useAmazon();
+  const { search, searchResults, searchError, setNowPlaying, setQueue } = useAmazon();
   const [query, setQuery] = createSignal('');
 
   function onSubmit(e: SubmitEvent) {
@@ -33,6 +33,9 @@ export default function Search() {
           style={{ width: '100%', padding: '8px 12px', 'font-size': '14px', 'box-sizing': 'border-box' }}
         />
       </form>
+      <Show when={searchError()}>
+        <div style={{ padding: '0 16px 8px', color: '#ff6b6b', 'font-size': '13px' }}>{searchError()}</div>
+      </Show>
       <div style={{ overflow: 'auto', flex: '1' }}>
         <For each={searchResults()}>
           {(track) => (

@@ -2,7 +2,7 @@ use tauri::{AppHandle, Manager, WebviewWindowBuilder};
 use crate::client::http::SAFARI_UA;
 
 const AUTH_WINDOW_LABEL: &str = "auth";
-const AUTH_URL: &str = "https://music.amazon.com/login";
+const AUTH_URL: &str = "https://music.amazon.com";
 
 pub fn create_auth_window(app: &AppHandle) -> tauri::Result<()> {
     WebviewWindowBuilder::new(

@@ -43,14 +43,16 @@ pub fn run() {
             let port = std_listener.local_addr().unwrap().port();
 
             let state = Arc::new(AppState {
-                client,
+                client: Mutex::new(client),
                 retry_buf: Arc::new(RetryBuffer::new()),
                 port,
                 db: Mutex::new(conn),
+                app_handle: app.handle().clone(),
             });
 
             app.manage(Arc::clone(&state));
 
+            let state_for_cookies = Arc::clone(&state);
             // Spawn only the axum server; everything else is already initialized.
             tauri::async_runtime::spawn(async move {
                 let listener = tokio::net::TcpListener::from_std(std_listener)
@@ -78,6 +80,9 @@ pub fn run() {
                         ubid_main: p.ubid_main,
                     };
                     vault::keychain::store(&t).ok();
+                    if let Ok(new_client) = client::build_client(&t) {
+                        *state_for_cookies.client.lock().unwrap() = new_client;
+                    }
                     auth::terminate_auth_window(&handle);
                 }
             });

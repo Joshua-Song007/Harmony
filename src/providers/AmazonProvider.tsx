@@ -39,7 +39,9 @@ export type LibraryItem = Album | Playlist;
 export interface AmazonContextValue {
   proxyPort: Accessor<number>;
   library: Accessor<LibraryItem[]>;
+  libraryError: Accessor<string | null>;
   searchResults: Accessor<Track[]>;
+  searchError: Accessor<string | null>;
   nowPlaying: Accessor<Track | null>;
   queue: Accessor<Track[]>;
   reauthRequired: Accessor<boolean>;
@@ -55,7 +57,9 @@ export const AmazonContext = createContext<AmazonContextValue>();
 export function AmazonProvider(props: ParentProps) {
   const [proxyPort, setProxyPort] = createSignal(0);
   const [library, setLibrary] = createSignal<LibraryItem[]>([]);
+  const [libraryError, setLibraryError] = createSignal<string | null>(null);
   const [searchResults, setSearchResults] = createSignal<Track[]>([]);
+  const [searchError, setSearchError] = createSignal<string | null>(null);
   const [nowPlaying, setNowPlaying] = createSignal<Track | null>(null);
   const [queue, setQueue] = createSignal<Track[]>([]);
   const [reauthRequired, setReauthRequired] = createSignal(false);
@@ -72,13 +76,23 @@ export function AmazonProvider(props: ParentProps) {
   });
 
   async function fetchLibrary(): Promise<void> {
-    const items = await api.fetchLibrary(proxyPort());
-    setLibrary(items);
+    try {
+      setLibraryError(null);
+      const items = await api.fetchLibrary(proxyPort());
+      setLibrary(items);
+    } catch (e) {
+      setLibraryError(e instanceof Error ? e.message : String(e));
+    }
   }
 
   async function search(query: string): Promise<void> {
-    const results = await api.search(proxyPort(), query);
-    setSearchResults(results);
+    try {
+      setSearchError(null);
+      const results = await api.search(proxyPort(), query);
+      setSearchResults(results);
+    } catch (e) {
+      setSearchError(e instanceof Error ? e.message : String(e));
+    }
   }
 
   function dismissReauth(): void {
@@ -88,7 +102,9 @@ export function AmazonProvider(props: ParentProps) {
   const value: AmazonContextValue = {
     proxyPort,
     library,
+    libraryError,
     searchResults,
+    searchError,
     nowPlaying,
     queue,
     reauthRequired,

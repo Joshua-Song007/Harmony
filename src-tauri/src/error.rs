@@ -28,3 +28,15 @@ impl From<security_framework::base::Error> for AppError {
         AppError::Keychain(e.to_string())
     }
 }
+
+impl axum::response::IntoResponse for AppError {
+    fn into_response(self) -> axum::response::Response {
+        use axum::http::StatusCode;
+        let status = match &self {
+            AppError::Unauthorized => StatusCode::UNAUTHORIZED,
+            AppError::BadGateway(s) => *s,
+            _ => StatusCode::INTERNAL_SERVER_ERROR,
+        };
+        (status, self.to_string()).into_response()
+    }
+}
