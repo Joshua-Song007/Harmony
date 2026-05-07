@@ -23,5 +23,5 @@ export function buildDrmConfig(): shaka.extern.DrmConfiguration {
       stallTimeout: 0,
       connectionTimeout: 0,
     },
-  } as shaka.extern.DrmConfiguration;
+  } as unknown as shaka.extern.DrmConfiguration;
 }

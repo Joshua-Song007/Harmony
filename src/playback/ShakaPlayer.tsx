@@ -26,7 +26,7 @@ export default function ShakaPlayer(props: ShakaPlayerProps) {
     player = new shaka.Player(videoRef!);
 
     player.addEventListener('error', (event) => {
-      props.onError?.((event as shaka.PlayerEvents.ErrorEvent).detail);
+      props.onError?.((event as Event & { detail: shaka.util.Error }).detail);
     });
 
     player.configure({ drm: props.drmConfig });

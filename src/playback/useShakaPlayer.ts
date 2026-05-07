@@ -18,10 +18,10 @@ export function useShakaPlayer(videoEl: () => HTMLVideoElement | undefined): Sha
 
   function attachListeners(p: shaka.Player) {
     p.addEventListener('buffering', (event) => {
-      setIsBuffering((event as shaka.PlayerEvents.BufferingEvent).buffering);
+      setIsBuffering((event as Event & { buffering: boolean }).buffering);
     });
     p.addEventListener('error', (event) => {
-      setError((event as shaka.PlayerEvents.ErrorEvent).detail);
+      setError((event as Event & { detail: shaka.util.Error }).detail);
     });
   }
 

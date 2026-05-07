@@ -1,0 +1,10 @@
+/Volumes/SecretTunnel/Dev Projects/ultil/Harmony/src-tauri/target/release/deps/cargo_toml-cf04e34f7823a863.d: /Users/joshuasong/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cargo_toml-0.22.3/src/cargo_toml.rs /Users/joshuasong/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cargo_toml-0.22.3/src/afs.rs /Users/joshuasong/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cargo_toml-0.22.3/src/error.rs /Users/joshuasong/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cargo_toml-0.22.3/src/inheritable.rs
+
+/Volumes/SecretTunnel/Dev Projects/ultil/Harmony/src-tauri/target/release/deps/libcargo_toml-cf04e34f7823a863.rlib: /Users/joshuasong/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cargo_toml-0.22.3/src/cargo_toml.rs /Users/joshuasong/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cargo_toml-0.22.3/src/afs.rs /Users/joshuasong/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cargo_toml-0.22.3/src/error.rs /Users/joshuasong/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cargo_toml-0.22.3/src/inheritable.rs
+
+/Volumes/SecretTunnel/Dev Projects/ultil/Harmony/src-tauri/target/release/deps/libcargo_toml-cf04e34f7823a863.rmeta: /Users/joshuasong/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cargo_toml-0.22.3/src/cargo_toml.rs /Users/joshuasong/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cargo_toml-0.22.3/src/afs.rs /Users/joshuasong/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cargo_toml-0.22.3/src/error.rs /Users/joshuasong/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cargo_toml-0.22.3/src/inheritable.rs
+
+/Users/joshuasong/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cargo_toml-0.22.3/src/cargo_toml.rs:
+/Users/joshuasong/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cargo_toml-0.22.3/src/afs.rs:
+/Users/joshuasong/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cargo_toml-0.22.3/src/error.rs:
+/Users/joshuasong/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cargo_toml-0.22.3/src/inheritable.rs:

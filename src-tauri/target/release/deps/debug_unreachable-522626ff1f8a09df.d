@@ -1,0 +1,7 @@
+/Volumes/SecretTunnel/Dev Projects/ultil/Harmony/src-tauri/target/release/deps/debug_unreachable-522626ff1f8a09df.d: /Users/joshuasong/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/new_debug_unreachable-1.0.6/src/lib.rs
+
+/Volumes/SecretTunnel/Dev Projects/ultil/Harmony/src-tauri/target/release/deps/libdebug_unreachable-522626ff1f8a09df.rlib: /Users/joshuasong/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/new_debug_unreachable-1.0.6/src/lib.rs
+
+/Volumes/SecretTunnel/Dev Projects/ultil/Harmony/src-tauri/target/release/deps/libdebug_unreachable-522626ff1f8a09df.rmeta: /Users/joshuasong/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/new_debug_unreachable-1.0.6/src/lib.rs
+
+/Users/joshuasong/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/new_debug_unreachable-1.0.6/src/lib.rs:

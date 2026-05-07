@@ -7,7 +7,6 @@ import {
   createSignal,
   onCleanup,
   onMount,
-  useContext,
 } from 'solid-js';
 import * as api from './api';
 

@@ -2,20 +2,8 @@ use std::sync::Arc;
 use axum::http::StatusCode;
 use tauri::AppHandle;
 use crate::auth::emit_reauth_required;
+use crate::error::AppError;
 use super::retry::{PendingRequest, RetryBuffer};
-
-#[derive(Debug)]
-pub enum AppError {
-    Unauthorized,
-    BadGateway(StatusCode),
-    Request(reqwest::Error),
-}
-
-impl From<reqwest::Error> for AppError {
-    fn from(e: reqwest::Error) -> Self {
-        AppError::Request(e)
-    }
-}
 
 pub async fn check(
     response: reqwest::Response,
