@@ -1,4 +1,4 @@
-import { For, Show, onMount } from 'solid-js';
+import { For, Show } from 'solid-js';
 import { type LibraryItem, useAmazon } from '../providers/useAmazon';
 
 function artistName(item: LibraryItem): string {
@@ -7,10 +7,6 @@ function artistName(item: LibraryItem): string {
 
 export default function Library() {
   const { library, libraryError, fetchLibrary, setNowPlaying, setQueue } = useAmazon();
-
-  onMount(() => {
-    fetchLibrary();
-  });
 
   function onCardClick(item: LibraryItem) {
     if (item.tracks.length === 0) return;

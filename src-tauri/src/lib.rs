@@ -65,6 +65,7 @@ pub fn run() {
 
             // Save tokens to Keychain and close auth window once the cookie
             // observer plugin captures them from WKWebsiteDataStore.
+            let initial_at_main = tokens.at_main.clone();
             let handle = app.handle().clone();
             app.listen("cookies-captured", move |event| {
                 #[derive(serde::Deserialize)]
@@ -74,6 +75,12 @@ pub fn run() {
                     ubid_main: String,
                 }
                 if let Ok(p) = serde_json::from_str::<CookiePayload>(event.payload()) {
+                    // Skip if tokens unchanged — avoids spurious Keychain write
+                    // prompt on every launch when cookies already exist in WKWebsiteDataStore.
+                    if p.at_main == initial_at_main && !initial_at_main.is_empty() {
+                        auth::terminate_auth_window(&handle);
+                        return;
+                    }
                     let t = Tokens {
                         session_id: p.session_id,
                         at_main: p.at_main,
@@ -88,6 +95,10 @@ pub fn run() {
             });
 
             if tokens.session_id.is_empty() {
+                // Only poll for cookies when we actually open an auth window.
+                // Polling unconditionally caused a spurious Keychain write prompt
+                // on every launch even when already authenticated.
+                tauri_plugin_cookie_observer::start_polling(app.handle().clone());
                 auth::create_auth_window(app.handle()).ok();
             }
 

@@ -11,12 +11,12 @@ pub struct CapturedTokens {
 
 pub fn init<R: Runtime>() -> TauriPlugin<R> {
     Builder::new("cookie-observer")
-        .setup(|app, _api| {
-            let handle = app.clone();
-            thread::spawn(move || poll_cookies(handle));
-            Ok(())
-        })
         .build()
+}
+
+// Called explicitly when an auth window is opened — not on every launch.
+pub fn start_polling<R: Runtime>(app: AppHandle<R>) {
+    thread::spawn(move || poll_cookies(app));
 }
 
 fn poll_cookies<R: Runtime>(app: AppHandle<R>) {
