@@ -17,7 +17,11 @@ pub fn run() {
     tauri::Builder::default()
         .plugin(tauri_plugin_cookie_observer::init())
         .setup(|app| {
-            let tokens = vault::keychain::load().unwrap_or(Tokens {
+            let data_dir = app.path()
+                .app_data_dir()
+                .expect("app data dir unavailable");
+            std::fs::create_dir_all(&data_dir).ok();
+            let tokens = vault::keychain::load(&data_dir).unwrap_or(Tokens {
                 session_id: String::new(),
                 at_main: String::new(),
                 ubid_main: String::new(),
@@ -26,11 +30,7 @@ pub fn run() {
             let client = client::build_client(&tokens)
                 .expect("failed to build HTTP client");
 
-            let db_path = app.path()
-                .app_data_dir()
-                .expect("app data dir unavailable")
-                .join("harmony.db");
-            std::fs::create_dir_all(db_path.parent().unwrap()).ok();
+            let db_path = data_dir.join("harmony.db");
             let conn = cache::db::init(&db_path)
                 .expect("failed to init cache DB");
             cache::purge_expired(&conn).ok();
@@ -67,6 +67,7 @@ pub fn run() {
             // observer plugin captures them from WKWebsiteDataStore.
             let initial_at_main = tokens.at_main.clone();
             let handle = app.handle().clone();
+            let data_dir_for_cookies = data_dir;
             app.listen("cookies-captured", move |event| {
                 #[derive(serde::Deserialize)]
                 struct CookiePayload {
@@ -86,7 +87,7 @@ pub fn run() {
                         at_main: p.at_main,
                         ubid_main: p.ubid_main,
                     };
-                    vault::keychain::store(&t).ok();
+                    vault::keychain::store(&data_dir_for_cookies, &t).ok();
                     if let Ok(new_client) = client::build_client(&t) {
                         *state_for_cookies.client.lock().unwrap() = new_client;
                     }

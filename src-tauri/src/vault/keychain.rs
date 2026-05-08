@@ -1,25 +1,22 @@
-use security_framework::passwords::{delete_generic_password, get_generic_password, set_generic_password};
+use std::fs;
+use std::io::Write;
+use std::os::unix::fs::OpenOptionsExt;
+use std::path::Path;
 use super::Tokens;
 
-const SERVICE: &str = "dev.harmony.app";
-const KEY: &str = "tokens";
-
-pub fn store(tokens: &Tokens) -> Result<(), security_framework::base::Error> {
-    let data = serde_json::to_vec(tokens).expect("Tokens serialization failed");
-    set_generic_password(SERVICE, KEY, &data)
+pub fn load(data_dir: &Path) -> Result<Tokens, Box<dyn std::error::Error>> {
+    let data = fs::read(data_dir.join("tokens.json"))?;
+    Ok(serde_json::from_slice(&data)?)
 }
 
-pub fn load() -> Result<Tokens, security_framework::base::Error> {
-    let data = get_generic_password(SERVICE, KEY)?;
-    serde_json::from_slice(&data).map_err(|_| {
-        security_framework::base::Error::from(security_framework_sys::base::errSecItemNotFound)
-    })
-}
-
-pub fn delete() -> Result<(), security_framework::base::Error> {
-    match delete_generic_password(SERVICE, KEY) {
-        Ok(()) => Ok(()),
-        Err(e) if e.code() == security_framework_sys::base::errSecItemNotFound => Ok(()),
-        Err(e) => Err(e),
-    }
+pub fn store(data_dir: &Path, tokens: &Tokens) -> Result<(), Box<dyn std::error::Error>> {
+    let data = serde_json::to_vec(tokens)?;
+    let mut file = fs::OpenOptions::new()
+        .write(true)
+        .create(true)
+        .truncate(true)
+        .mode(0o600)
+        .open(data_dir.join("tokens.json"))?;
+    file.write_all(&data)?;
+    Ok(())
 }

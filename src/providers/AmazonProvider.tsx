@@ -67,7 +67,6 @@ export function AmazonProvider(props: ParentProps) {
   onMount(async () => {
     const port = await invoke<number>('get_proxy_port');
     setProxyPort(port);
-    fetchLibrary();
 
     const unlisten: UnlistenFn = await listen('reauth-required', () => {
       setReauthRequired(true);
